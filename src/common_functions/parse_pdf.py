@@ -14,7 +14,10 @@ def read_pdf_document(filepath, begin_page=0, end_page=-1) -> str:
         pageObj = pdfReader.getPage(i)
         pages += ' ' + pageObj.extractText()
     
-    pages = pages.replace(' -','-')
+    text = pages.replace(' -','-')
+
+    #clean up errant situations where two strings are merged without a space
+    text = re.sub(r'([a-z])([A-Z])', r'\1. \2', text)
     
     return pages
 
